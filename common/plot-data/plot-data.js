@@ -5,7 +5,7 @@ function PlotData(options) {
         priceVariation: 1
     }, options);
 
-    var generatePriceLadder=function() {
+    var generatePriceLadder = function () {
         var prices = [];
 
         // initialize the ladder object.
@@ -41,12 +41,11 @@ function PlotData(options) {
     var index;
     var samples = [];
     var priceLadder = generatePriceLadder();
-    var currentPriceIndex = _.indexOf(priceLadder,options.initPrice);
+    var currentPriceIndex = _.indexOf(priceLadder, options.initPrice);
 
     var generateNewSample = function () {
         var sample;
 
-        // currentPriceIndex =
         currentPriceIndex += _.random(options.priceVariation * -1, options.priceVariation);
         currentPriceIndex = currentPriceIndex < 0 ? 0 : currentPriceIndex;
         sample = priceLadder[currentPriceIndex];
