@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/styles/styles.css">
+
+    <script src="../common/js/jquery/jquery-3.1.1.min.js"></script>
+    <script src="flot/jquery.flot.min.js"></script>
+
+</head>
+<body>
+
+<div id="placeholder" class="chart">
+</div>
+
+<script>
+    var series = {
+        line1: [ [0, 1], [10, 5], [20, 10] ],
+        line2: [ [1, 10], [2, 17], [30, 5] ],
+        bar1: [ [15, 10] ],
+        bar2: [ [10, 12] ]
+    };
+
+    var options = {
+        series: {
+            points: { show: false }
+        }
+    };
+
+    $.plot($("#placeholder"), [
+            {data: series.line1, lines: {show: true}},
+            {data: series.line2, lines: {show: true}},
+            {data: series.bar1, bars: {show: true, horizontal: true, barWidth: 10}, points: {show: false}},
+            {data: series.bar2, bars: {show: true, horizontal: true, barWidth: 5}, points: {show: false}}
+    ], options);
+</script>
+
+</body>
+</html>
