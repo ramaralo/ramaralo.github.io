@@ -16,52 +16,62 @@
 
 <script>
     var series = {
-        line1: [ [0, 1], [1, 5], [2, 10] ],
-        line2: [ [0, 1.5], [1, 3], [2, 15] ],
-        bar1: [ [0.8, 0.75] ],
-        bar2: [ [0.3, 0.75] ]
+        line1: [ [0, 1], [1, 5], [2, 10] ], // red line
+        line2: [ [0, 1.5], [1, 3], [2, 15] ], // green line
+        bar1: [ [0.8, 0.75] ], // gray data
+        bar2: [ [0.3, 0.75] ] // blue data
     };
 
     var options = {
+        grid: {
+           borderWidth: 1,
+            color: '#999',
+            axisMargin: -18
+        },
         series: {
             points: { show: false }
         },
         xaxes: [
             {
-                position: 'bottom'
+                position: 'bottom',
+                show: false
             },
             {
                 max: 1,
-                position: 'top'
+                position: 'top',
+                show: false
             }
         ],
         yaxes: [
-            {
-                position: 'right'
-            },
-            {
-                position: 'left'
-            }
+                // lines axis
+                {
+                    position: 'left',
+                    ticks: function (axis) {
+                        return [axis.datamin, axis.datamax]
+                    }
+                },
+                // gray bar axis
+                {
+                    position: 'left',
+                    max: 1.5,
+                    min: 0,
+                    show: true,
+                    ticks: [0.75],
+                    tickFormatter: function (val, axis) {
+                        return (series.bar1[0][0] * 100) + '%';
+                    }
+                },
+                // blue bar axis
+                {
+                    position: 'right',
+                    max: 1.5,
+                    min: 0,
+                    show: false
+                }
         ]
     };
 
-    $.plot($("#placeholder"), [
-            {
-                data: series.line1,
-                xaxis: 1,
-                yaxis: 1,
-                lines: {
-                    show: true
-                }
-            },
-            {
-                data: series.line2,
-                xaxis: 1,
-                yaxis: 1,
-                lines: {
-                    show: true
-                }
-            },
+    var plot = $.plot($("#placeholder"), [
             {
                 data: series.bar1,
                 xaxis: 2,
@@ -70,7 +80,9 @@
                     align: 'center',
                     barWidth: 1,
                     show: true,
-                    horizontal: true
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: "#CFCFCF"
                 },
                 points: {
                     show: false
@@ -79,16 +91,37 @@
             {
                 data: series.bar2,
                 xaxis: 2,
-                yaxis: 2,
+                yaxis: 3,
                 bars: {
                     align: 'center',
                     barWidth: 0.5,
                     show: true,
-                    horizontal: true
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: '#0000FF'
                 },
                 points: {
                     show: false
                 }
+            },
+            {
+                data: series.line1,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#FF0000'
+
+            },
+            {
+                data: series.line2,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#1CC43F'
             }
     ], options);
 </script>
