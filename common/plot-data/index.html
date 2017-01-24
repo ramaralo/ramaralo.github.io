@@ -15,15 +15,16 @@
 
 <script>
     var plotDataObj = new PlotData({
-        nrSamples: 200,
-        initPrice: 10,
+        nrSamples: 20,
+        initPrice: 2,
         priceVariation: 1
     });
     console.log(plotDataObj.getGeneratedSamples());
-    plotDataObj.generateNewSample();
-    plotDataObj.generateNewSample();
+    console.log(plotDataObj.generateNewSample());
+    console.log(plotDataObj.generateNewSample());
     console.log(plotDataObj.getGeneratedSamples());
-    debugger;
+    console.log(plotDataObj.generateNewSample());
+    console.log(plotDataObj.getGeneratedSamples());
 </script>
 
 </body>

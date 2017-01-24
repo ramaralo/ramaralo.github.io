@@ -52,7 +52,7 @@ function PlotData(options) {
         samples.push(sample);
 
         if (samples.length > options.nrSamples) {
-            samples.pop();
+            samples.shift();
         }
 
         return sample;
