@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../lodash/lodash.min.js"></script>
+    <script src="./plot-data.js"></script>
+
+</head>
+<body>
+
+<div id="placeholder" class="chart">
+</div>
+
+<script>
+    var plotDataObj = new PlotData({
+        nrSamples: 200,
+        initPrice: 10,
+        priceVariation: 1
+    });
+    console.log(plotDataObj.getGeneratedSamples());
+    plotDataObj.generateNewSample();
+    plotDataObj.generateNewSample();
+    console.log(plotDataObj.getGeneratedSamples());
+    debugger;
+</script>
+
+</body>
+</html>
