@@ -16,23 +16,80 @@
 
 <script>
     var series = {
-        line1: [ [0, 1], [10, 5], [20, 10] ],
-        line2: [ [1, 10], [2, 17], [30, 5] ],
-        bar1: [ [15, 10] ],
-        bar2: [ [10, 12] ]
+        line1: [ [0, 1], [1, 5], [2, 10] ],
+        line2: [ [0, 1.5], [1, 3], [2, 15] ],
+        bar1: [ [0.8, 0.75] ],
+        bar2: [ [0.3, 0.75] ]
     };
 
     var options = {
         series: {
             points: { show: false }
-        }
+        },
+        xaxes: [
+            {
+                position: 'bottom'
+            },
+            {
+                max: 1,
+                position: 'top'
+            }
+        ],
+        yaxes: [
+            {
+                position: 'right'
+            },
+            {
+                position: 'left'
+            }
+        ]
     };
 
     $.plot($("#placeholder"), [
-            {data: series.line1, lines: {show: true}},
-            {data: series.line2, lines: {show: true}},
-            {data: series.bar1, bars: {show: true, horizontal: true, barWidth: 10}, points: {show: false}},
-            {data: series.bar2, bars: {show: true, horizontal: true, barWidth: 5}, points: {show: false}}
+            {
+                data: series.line1,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                }
+            },
+            {
+                data: series.line2,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                }
+            },
+            {
+                data: series.bar1,
+                xaxis: 2,
+                yaxis: 2,
+                bars: {
+                    align: 'center',
+                    barWidth: 1,
+                    show: true,
+                    horizontal: true
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.bar2,
+                xaxis: 2,
+                yaxis: 2,
+                bars: {
+                    align: 'center',
+                    barWidth: 0.5,
+                    show: true,
+                    horizontal: true
+                },
+                points: {
+                    show: false
+                }
+            }
     ], options);
 </script>
 
