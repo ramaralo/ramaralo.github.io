@@ -15,8 +15,7 @@
 </head>
 <body>
 
-<div id="placeholder" class="chart">
-</div>
+<div id="placeholder" class="chart"></div>
 
 <script>
     var redLinePlotData = new PlotData({
@@ -96,7 +95,12 @@
         ]
     };
 
-    var plot = $.plot($("#placeholder"), [
+    var plots = [];
+
+    for(var i=0; i<100; i++) {
+        $('body').append($('<div id="placeholder_'+i+'" class="chart"></div>'));
+
+        plots.push($.plot($("#placeholder_"+i), [
             {
                 data: series.bar1,
                 xaxis: 2,
@@ -148,7 +152,62 @@
                 },
                 color: '#1CC43F'
             }
-    ], options);
+        ], options));
+    }
+
+    /*var plot = $.plot($("#placeholder"), [
+            {
+                data: series.bar1,
+                xaxis: 2,
+                yaxis: 2,
+                bars: {
+                    align: 'center',
+                    barWidth: 1,
+                    show: true,
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: "#CFCFCF"
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.bar2,
+                xaxis: 2,
+                yaxis: 3,
+                bars: {
+                    align: 'center',
+                    barWidth: 0.5,
+                    show: true,
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: '#0000FF'
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.line1,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#FF0000'
+
+            },
+            {
+                data: series.line2,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#1CC43F'
+            }
+    ], options);*/
 </script>
 
 </body>
