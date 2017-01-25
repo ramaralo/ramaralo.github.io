@@ -7,33 +7,207 @@
 
     <script src="../common/js/jquery/jquery-3.1.1.min.js"></script>
     <script src="flot/jquery.flot.min.js"></script>
+    <script src="./poltData2flot.js"></script>
+
+    <script src="../common/lodash/lodash.min.js"></script>
+    <script src="../common/plot-data/plot-data.js"></script>
 
 </head>
 <body>
 
-<div id="placeholder" class="chart">
-</div>
+<div id="placeholder" class="chart"></div>
 
 <script>
+    var redLinePlotData = new PlotData({
+        nrSamples: 200,
+        initPrice: 2,
+        priceVariation: 1
+    });
+
+    var redLineflotData = plotData2Flot(redLinePlotData.getGeneratedSamples());
+
+    var greenLinePlotData = new PlotData({
+        nrSamples: 200,
+        initPrice: 2,
+        priceVariation: 1
+    });
+
+    var greenLineFlotData = plotData2Flot(greenLinePlotData.getGeneratedSamples());
+
     var series = {
-        line1: [ [0, 1], [10, 5], [20, 10] ],
-        line2: [ [1, 10], [2, 17], [30, 5] ],
-        bar1: [ [15, 10] ],
-        bar2: [ [10, 12] ]
+        line1: redLineflotData.points, // red line
+        line2: greenLineFlotData.points, // green line
+        bar1: [ [0.8, 0.75] ], // gray data
+        bar2: [ [0.3, 0.75] ] // blue data
     };
 
     var options = {
+        grid: {
+           borderWidth: 1,
+            color: '#999',
+            axisMargin: -22
+        },
         series: {
             points: { show: false }
-        }
+        },
+        xaxes: [
+            {
+                position: 'bottom',
+                show: false
+            },
+            {
+                max: 1,
+                position: 'top',
+                show: false
+            }
+        ],
+        yaxes: [
+                // line axis
+                {
+                    position: 'left',
+                    tickDecimals: 1,
+                    ticks: function (axis) {
+                        var min = ((Math.round( redLineflotData.min * 10) / 10)).toFixed(axis.tickDecimals);
+                        var max = ((Math.round( redLineflotData.max * 10) / 10)).toFixed(axis.tickDecimals);
+
+                        return [min, max];
+                    }
+                },
+                // gray bar axis
+                {
+                    position: 'left',
+                    max: 1.5,
+                    min: 0,
+                    show: true,
+                    ticks: [0.75],
+                    tickFormatter: function (val, axis) {
+                        return (series.bar1[0][0] * 100) + '%';
+                    }
+                },
+                // blue bar axis
+                {
+                    position: 'right',
+                    max: 1.5,
+                    min: 0,
+                    show: false
+                }
+
+        ]
     };
 
-    $.plot($("#placeholder"), [
-            {data: series.line1, lines: {show: true}},
-            {data: series.line2, lines: {show: true}},
-            {data: series.bar1, bars: {show: true, horizontal: true, barWidth: 10}, points: {show: false}},
-            {data: series.bar2, bars: {show: true, horizontal: true, barWidth: 5}, points: {show: false}}
-    ], options);
+    var plots = [];
+
+    for(var i=0; i<100; i++) {
+        $('body').append($('<div id="placeholder_'+i+'" class="chart"></div>'));
+
+        plots.push($.plot($("#placeholder_"+i), [
+            {
+                data: series.bar1,
+                xaxis: 2,
+                yaxis: 2,
+                bars: {
+                    align: 'center',
+                    barWidth: 1,
+                    show: true,
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: "#CFCFCF"
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.bar2,
+                xaxis: 2,
+                yaxis: 3,
+                bars: {
+                    align: 'center',
+                    barWidth: 0.5,
+                    show: true,
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: '#0000FF'
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.line1,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#FF0000'
+
+            },
+            {
+                data: series.line2,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#1CC43F'
+            }
+        ], options));
+    }
+
+    /*var plot = $.plot($("#placeholder"), [
+            {
+                data: series.bar1,
+                xaxis: 2,
+                yaxis: 2,
+                bars: {
+                    align: 'center',
+                    barWidth: 1,
+                    show: true,
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: "#CFCFCF"
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.bar2,
+                xaxis: 2,
+                yaxis: 3,
+                bars: {
+                    align: 'center',
+                    barWidth: 0.5,
+                    show: true,
+                    horizontal: true,
+                    lineWidth: 0,
+                    fillColor: '#0000FF'
+                },
+                points: {
+                    show: false
+                }
+            },
+            {
+                data: series.line1,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#FF0000'
+
+            },
+            {
+                data: series.line2,
+                xaxis: 1,
+                yaxis: 1,
+                lines: {
+                    show: true
+                },
+                color: '#1CC43F'
+            }
+    ], options);*/
 </script>
 
 </body>
