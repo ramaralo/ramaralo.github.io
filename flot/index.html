@@ -7,6 +7,10 @@
 
     <script src="../common/js/jquery/jquery-3.1.1.min.js"></script>
     <script src="flot/jquery.flot.min.js"></script>
+    <script src="./poltData2flot.js"></script>
+
+    <script src="../common/lodash/lodash.min.js"></script>
+    <script src="../common/plot-data/plot-data.js"></script>
 
 </head>
 <body>
@@ -15,9 +19,25 @@
 </div>
 
 <script>
+    var redLinePlotData = new PlotData({
+        nrSamples: 200,
+        initPrice: 2,
+        priceVariation: 1
+    });
+
+    var redLineflotData = plotData2Flot(redLinePlotData.getGeneratedSamples());
+
+    var greenLinePlotData = new PlotData({
+        nrSamples: 200,
+        initPrice: 2,
+        priceVariation: 1
+    });
+
+    var greenLineFlotData = plotData2Flot(greenLinePlotData.getGeneratedSamples());
+
     var series = {
-        line1: [ [0, 1], [1, 5], [2, 10] ], // red line
-        line2: [ [0, 1.5], [1, 3], [2, 15] ], // green line
+        line1: redLineflotData.points, // red line
+        line2: greenLineFlotData.points, // green line
         bar1: [ [0.8, 0.75] ], // gray data
         bar2: [ [0.3, 0.75] ] // blue data
     };
@@ -26,7 +46,7 @@
         grid: {
            borderWidth: 1,
             color: '#999',
-            axisMargin: -18
+            axisMargin: -22
         },
         series: {
             points: { show: false }
@@ -43,11 +63,15 @@
             }
         ],
         yaxes: [
-                // lines axis
+                // line axis
                 {
                     position: 'left',
+                    tickDecimals: 1,
                     ticks: function (axis) {
-                        return [axis.datamin, axis.datamax]
+                        var min = ((Math.round( redLineflotData.min * 10) / 10)).toFixed(axis.tickDecimals);
+                        var max = ((Math.round( redLineflotData.max * 10) / 10)).toFixed(axis.tickDecimals);
+
+                        return [min, max];
                     }
                 },
                 // gray bar axis
@@ -68,6 +92,7 @@
                     min: 0,
                     show: false
                 }
+
         ]
     };
 
